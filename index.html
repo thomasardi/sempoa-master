@@ -156,7 +156,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
    when the keypad slides in or out. Type size is derived from the space that is left (container units). */
 .drill-body{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;max-width:480px;margin:0 auto;padding-bottom:var(--kp,0px);container-type:size}
 .paper{--fs:clamp(22px,4.6vh,38px);width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);border-radius:26px;padding:20px 26px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
-@supports (height:1cqh){.paper{--fs:clamp(22px,calc((100cqh - 96px - var(--n,4) * 2px) / (var(--n,4) * 1.42 + 1.25)),46px)}}
+@supports (height:1cqh){.paper{--fs:clamp(22px,calc((100cqh - 40px - var(--n,4) * 2px) / (var(--n,4) * 1.42 + 1.25)),46px)}}
 .paper-meta{display:flex;justify-content:space-between;gap:8px;font-size:11px;line-height:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .paper-meta span:first-child{color:var(--accent-text)}
 .column{display:flex;flex-direction:column;gap:.3em;font-family:var(--font-num);font-weight:700;font-size:var(--fs);line-height:1.12;letter-spacing:.01em}
@@ -176,15 +176,19 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .slot.shake{animation:shake .34s}
 .slot.ok{animation:okPulse .2s}
 
-.keypad{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);border-radius:24px 24px 0 0;
-  box-shadow:0 -12px 34px rgba(60,20,5,.14);padding:6px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
-  transform:translateY(104%);visibility:hidden;transition:transform .36s var(--ease),visibility 0s linear .36s;will-change:transform;-webkit-user-select:none;user-select:none}
-.keypad.open{transform:none;visibility:visible;transition:transform .36s var(--ease),visibility 0s}
+.keypad{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);border-radius:22px 22px 0 0;
+  box-shadow:0 -10px 30px rgba(60,20,5,.12);padding:12px max(14px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+  visibility:hidden;transform:translateY(var(--kpshift,0px));transition:transform .34s var(--ease),visibility 0s;will-change:transform;-webkit-user-select:none;user-select:none}
+#app[data-screen="drill"]~.keypad{visibility:visible}
+.keypad.open{transform:none}
 .kp-in{max-width:480px;margin:0 auto}
-.kp-top{display:flex;justify-content:flex-end;align-items:center;min-height:38px}
-.kp-aux{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;font-size:13px;font-weight:700;color:var(--muted)}
-.kp-aux:active{background:var(--surface-2)}
-.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kp-ans{display:flex;gap:10px;align-items:stretch}
+.kp-ans .slot{flex:1;min-width:0;min-height:56px;font-size:30px;padding:0 16px}
+.kp-send{flex:none;width:76px;border-radius:16px;display:grid;place-items:center;color:#fff;background:linear-gradient(100deg,var(--cta-a),var(--cta-b));box-shadow:0 2px 0 rgba(120,40,0,.45)}
+.kp-send:active{transform:translateY(2px);box-shadow:none}
+.kp-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,auto);gap:10px;margin-top:10px;transition:opacity .2s}
+.keypad:not(.open) .kp-grid{opacity:0;pointer-events:none}
+.k.tall{grid-column:4;grid-row:1 / span 2;height:auto}
 .k{height:clamp(42px,6.2vh,58px);height:clamp(42px,6.2dvh,58px);border-radius:15px;background:var(--surface-2);border:1px solid var(--line);font:700 26px/1 var(--font-num);display:grid;place-items:center;
   box-shadow:0 2px 0 var(--line-strong);transition:transform .08s,box-shadow .08s,background .12s;color:var(--fg)}
 .k:active,.k.pressed{transform:translateY(2px);box-shadow:0 0 0 var(--line-strong);background:var(--accent-soft)}
@@ -460,7 +464,6 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
       <div class="paper" id="paper">
         <div class="column" id="column"></div>
         <div class="rule"></div>
-        <button class="slot" id="slot" aria-label="Answer. Tap to open keypad."><span class="eq">=</span><span class="val" id="slotVal"></span><span class="caret"></span></button>
       </div>
     </main>
   </section>
@@ -518,18 +521,20 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 </div>
 
 <!-- keypad: slides up when the answer box is tapped -->
-<div class="keypad" id="keypad" aria-hidden="true">
+<div class="keypad" id="keypad" aria-hidden="false">
   <div class="kp-in">
-    <div class="kp-top">
-      <button class="kp-aux" id="kpHide">Hide keypad<span data-ic="chev" data-size="16"></span></button>
+    <div class="kp-ans">
+      <button class="slot" id="slot" aria-label="Answer. Tap to open keypad."><span class="eq">=</span><span class="val" id="slotVal"></span><span class="caret"></span></button>
+      <button class="kp-send" id="kSend" aria-label="Submit answer"><span data-ic="send" data-size="26"></span></button>
     </div>
     <div class="kp-grid" id="kpGrid">
       <button class="k" data-k="1">1</button><button class="k" data-k="2">2</button><button class="k" data-k="3">3</button>
+      <button class="k enter tall" id="kEnter" aria-label="Next question"><span data-ic="check" data-size="30"></span></button>
       <button class="k" data-k="4">4</button><button class="k" data-k="5">5</button><button class="k" data-k="6">6</button>
       <button class="k" data-k="7">7</button><button class="k" data-k="8">8</button><button class="k" data-k="9">9</button>
       <button class="k del" id="kDel" aria-label="Backspace"><span data-ic="backspace" data-size="26"></span></button>
-      <button class="k" data-k="0">0</button>
-      <button class="k enter" id="kEnter" aria-label="Submit answer"><span data-ic="check" data-size="28"></span></button>
+      <button class="k" data-k="00">00</button><button class="k" data-k="0">0</button><button class="k" id="kClr" aria-label="Clear">C</button>
+      <button class="k" id="kpHide" aria-label="Hide keypad"><span data-ic="chev" data-size="26"></span></button>
     </div>
   </div>
 </div>
@@ -596,6 +601,7 @@ var I={
   replay:'<path d="M4 12a8 8 0 1 0 2.5-5.8M4 4v4.5h4.5"/>',
   target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 12h.01"/>',
   chev:'<path d="M6 9.5l6 6 6-6"/>',
+  send:'<path d="M5 12h13M12.5 6l5.5 6-5.5 6"/>',
   backspace:'<path d="M21 6H9.5L3 12l6.5 6H21a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1z"/><path d="M13.5 9.5l5 5M18.5 9.5l-5 5"/>',
   skip:'<path d="M5 5l9 7-9 7V5zM18 5v14"/>',
   back:'<path d="M15 5l-7 7 7 7"/>',
@@ -902,8 +908,11 @@ function showInput(){
   slot.classList.toggle('filled',!!(r&&r.input));
   slot.setAttribute('aria-label','Answer'+(r&&r.input?' '+r.input:'')+'. Tap to open keypad.');
 }
-function kpPad(){return Math.max(0,$('#keypad').offsetHeight-$('#insetProbe').offsetHeight)}
-function setKpPad(){$('#drillBody').style.setProperty('--kp',kpPad()+'px')}
+function setKpPad(){
+  var kp=$('#keypad'),g=$('#kpGrid'),shift=g.offsetHeight+10;
+  kp.style.setProperty('--kpshift',shift+'px');
+  $('#drillBody').style.setProperty('--kp',kp.offsetHeight+'px');
+}
 function setKeypad(open){
   var r=S.run;if(r)r.kpOpen=open;
   $('#keypad').classList.toggle('open',open);
@@ -914,6 +923,8 @@ window.addEventListener('resize',function(){if(S.run&&!S.run.done)setKpPad()});
 function pressKey(d){
   var r=S.run;if(!r||r.paused||r.done)return;
   if(r.input.length>=3)return;
+  if(d==='00'&&(r.input===''||r.input==='0'))d='0';
+  if(r.input.length+d.length>3)d=d.slice(0,3-r.input.length);
   r.input=r.input==='0'?d:r.input+d;showInput();tone(520,.035,'triangle',.05);buzz(6);
 }
 function backspace(){var r=S.run;if(!r||r.paused||r.done)return;r.input=r.input.slice(0,-1);showInput();tone(360,.035,'triangle',.04);buzz(6)}
@@ -932,6 +943,8 @@ function submit(){
 $$('#kpGrid [data-k]').forEach(function(b){press(b,function(){pressKey(b.dataset.k)})});
 press($('#kDel'),backspace);
 press($('#kEnter'),function(){submit()});
+press($('#kSend'),function(){submit()});
+press($('#kClr'),function(){var r=S.run;if(!r||r.paused||r.done)return;r.input='';showInput()});
 press($('#kpHide'),function(){setKeypad(false)});
 press($('#slot'),function(){var r=S.run;if(r&&!r.paused&&!r.done&&!r.kpOpen)setKeypad(true)});
 document.addEventListener('keydown',function(e){
