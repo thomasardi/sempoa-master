@@ -122,10 +122,10 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);
   border-top:1px solid var(--line);padding:6px max(16px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
   transition:transform .4s var(--ease),visibility 0s}
-.nav-in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.nav-in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .nav-i{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:48px;border-radius:14px;font-size:12px;font-weight:600;color:var(--muted);transition:color .2s,background .2s}
 .nav-i.on{color:var(--accent-text);font-weight:800;background:var(--accent-soft)}
-#app:not([data-screen="setup"]):not([data-screen="records"]) .nav{transform:translateY(110%);visibility:hidden;transition:transform .3s var(--ease),visibility 0s .3s}
+#app:not([data-screen="setup"]):not([data-screen="records"]):not([data-screen="ranks"]):not([data-screen="account"]) .nav{transform:translateY(110%);visibility:hidden;transition:transform .3s var(--ease),visibility 0s .3s}
 
 /* ---------- countdown ---------- */
 .count{display:grid;place-items:center;background:var(--bg);padding-block:0;z-index:40}
@@ -340,6 +340,36 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .clear.arm{color:var(--bad);background:var(--bad-soft)}
 
 /* ---------- motion ---------- */
+
+/* ---------- account + leaderboard ---------- */
+.who{display:inline-flex;align-items:center;gap:6px;max-width:150px;padding:6px 12px 6px 6px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);font-size:13px;font-weight:700}
+.who i{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font:800 12px/24px var(--font-ui);text-align:center;font-style:normal;flex:none}
+.who span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.who.guest{color:var(--accent-text);padding:8px 14px;background:var(--accent-soft);border-color:transparent}
+.form{display:flex;flex-direction:column;gap:12px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.fld input{width:100%;min-height:50px;padding:0 14px;border-radius:14px;border:1.5px solid var(--line-strong);background:var(--surface);color:var(--fg);font:600 16px var(--font-ui);outline:none;transition:border-color .2s,box-shadow .2s}
+.fld input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--ring)}
+.fld small{font-size:12px;color:var(--muted)}
+.ferr{min-height:20px;font-size:13px;font-weight:600;color:var(--bad)}
+.me-card{display:flex;align-items:center;gap:14px}
+.me-card .av{width:54px;height:54px;border-radius:18px;background:var(--accent);color:#fff;display:grid;place-items:center;font:800 24px var(--font-ui);flex:none}
+.me-card b{font-size:19px;display:block;overflow-wrap:anywhere}
+.me-card small{color:var(--muted);font-size:12.5px}
+.lb{display:flex;flex-direction:column;gap:8px}
+.lb-row{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+.lb-row.me{background:var(--accent-soft);border-color:var(--accent)}
+.lb-pos{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 13px var(--font-num);background:var(--surface-2);color:var(--muted);flex:none}
+.lb-row.p1 .lb-pos{background:#fde68a;color:#7c5a00}.lb-row.p2 .lb-pos{background:#e5e7eb;color:#4b5563}.lb-row.p3 .lb-pos{background:#fed7aa;color:#9a3412}
+.lb-name{flex:1;min-width:0;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb-sc{text-align:right;display:flex;flex-direction:column;flex:none}
+.lb-sc b{font:800 18px/1.1 var(--font-num);letter-spacing:-.03em}
+.lb-sc b em{font-style:normal;font-size:11px;color:var(--muted);font-weight:600}
+.lb-sc small{font-size:11px;color:var(--muted);font-weight:600}
+.lb-gap{text-align:center;color:var(--muted);letter-spacing:.3em;font-weight:800;line-height:1}
+.linkbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;background:var(--accent-soft);color:var(--accent-text);font-weight:800;font-size:13px}
+.note-box{padding:12px 14px;border-radius:14px;background:var(--surface-2);border:1px solid var(--line);font-size:12.5px;color:var(--muted)}
 @keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes rowIn{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
 @keyframes pop{0%{opacity:0;transform:scale(.55)}55%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:scale(1)}}
@@ -371,7 +401,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
           </svg>
           <span class="brand-name">Sempoa Master</span>
         </div>
-        <button class="icon-btn" id="btnSound" aria-label="Sound and haptics" aria-pressed="true"></button>
+        <div style="display:flex;align-items:center;gap:4px"><button class="who guest" id="btnWho" aria-label="Account"></button><button class="icon-btn" id="btnSound" aria-label="Sound and haptics" aria-pressed="true"></button></div>
       </header>
 
       <div class="intro">
@@ -451,6 +481,25 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
     </div>
   </section>
 
+
+  <!-- LEADERBOARD -->
+  <section class="screen" id="s-ranks" data-s="ranks" hidden>
+    <div class="wrap">
+      <header class="topbar"><div><span class="eyebrow">Sempoa Master</span><h1 class="h-sm">Leaderboard</h1></div></header>
+      <p class="sub">Ranked by correct answers, then by faster average time per answer. Each player counts once, with their best run.</p>
+      <div class="chips" id="rankChips" role="tablist" aria-label="Session length"></div>
+      <div id="rankBody"></div>
+    </div>
+  </section>
+
+  <!-- ACCOUNT -->
+  <section class="screen" id="s-account" data-s="account" hidden>
+    <div class="wrap">
+      <header class="topbar"><div><span class="eyebrow">Sempoa Master</span><h1 class="h-sm">Account</h1></div></header>
+      <div id="acctBody"></div>
+    </div>
+  </section>
+
   <div class="cta-bar" id="ctaBar">
     <div class="cta-in">
       <button class="btn primary cta" id="btnStart"><span id="startLabel">Start 80-question drill</span><span data-ic="arrow"></span></button>
@@ -461,7 +510,9 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
   <nav class="nav" id="nav" aria-label="Main">
     <div class="nav-in">
       <button class="nav-i on" data-go="setup"><span data-ic="calc"></span><span>Drill</span></button>
+      <button class="nav-i" data-go="ranks"><span data-ic="trophy"></span><span>Ranks</span></button>
       <button class="nav-i" data-go="records"><span data-ic="history"></span><span>Records</span></button>
+      <button class="nav-i" data-go="account"><span data-ic="user"></span><span>Account</span></button>
     </div>
   </nav>
 </div>
@@ -514,7 +565,20 @@ var store={
 var settings=Object.assign({duration:120,sound:true},store.get(LS_SET,{}));
 if(DURS.indexOf(settings.duration)<0) settings.duration=120;
 function saveSettings(){store.set(LS_SET,settings)}
-function loadRecords(){var r=store.get(LS_REC,[]);return Array.isArray(r)?r.filter(function(x){return x&&Array.isArray(x.items)}):[]}
+var LS_SES='sempoa.session.v1', SB_URL='https://ssgyeenkyexdywuczuhz.supabase.co', SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzZ3llZW5reWV4ZHl3dWN6dWh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NzgyNjUsImV4cCI6MjA5MDM1NDI2NX0.66nxhzNJIX9aKzTYxyNE0UoJUCOOW3OPzUg3zdyZYWE';
+var session=store.get(LS_SES,null);
+if(!session||typeof session.token!=='string'||typeof session.username!=='string')session=null;
+function recKey(){return session?LS_REC+'.u.'+session.username.toLowerCase():LS_REC}
+function api(fn,args){
+  var h={'Content-Type':'application/json',apikey:SB_KEY};
+  if(SB_KEY.indexOf('eyJ')===0)h.Authorization='Bearer '+SB_KEY;
+  var ctl=window.AbortController?new AbortController():null,tm=setTimeout(function(){if(ctl)ctl.abort()},12000);
+  return fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:h,body:JSON.stringify(args||{}),signal:ctl?ctl.signal:undefined})
+    .then(function(r){return r.json().catch(function(){return null}).then(function(j){clearTimeout(tm);if(!r.ok)throw new Error((j&&j.message)||'Request failed');return j})},
+          function(e){clearTimeout(tm);throw new Error('Cannot reach the server. Check your connection.')});
+}
+function setSession(s){session=s;if(s)store.set(LS_SES,s);else{try{localStorage.removeItem(LS_SES)}catch(e){}}}
+function loadRecords(){var r=store.get(recKey(),[]);return Array.isArray(r)?r.filter(function(x){return x&&Array.isArray(x.items)}):[]}
 
 /* ---------- icons ---------- */
 var I={
@@ -542,7 +606,8 @@ var I={
   bulb:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
   bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/>',
   gauge:'<path d="M4 17a8 8 0 1 1 16 0M12 17l4-5"/>',
-  list:'<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>'
+  list:'<path d="M9 6h11M9 12h11M9 18h11M4.5 6h.01M4.5 12h.01M4.5 18h.01"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
 };
 function icon(n,s){s=s||22;return '<svg class="ic" width="'+s+'" height="'+s+'" viewBox="0 0 24 24" aria-hidden="true">'+I[n]+'</svg>'}
 $$('[data-ic]').forEach(function(el){el.innerHTML=icon(el.dataset.ic,+el.dataset.size||22)});
@@ -737,6 +802,7 @@ function renderSetup(){
   $('#targetPace').textContent=fmtS(pace);
   $('#paceNote').textContent=d===60?'0.75 s per problem leaves almost no time to type an answer. Treat Blitz as a stretch target.':d===120?'1.50 s per problem, typing included. A solid pace to train toward.':'2.25 s per problem. Good for building accuracy before speed.';
   setSwitch('#swSound',settings.sound);
+  renderWho();
   $('#btnSound').innerHTML=icon(settings.sound?'volume':'volumeoff',22);
   $('#btnSound').setAttribute('aria-pressed',settings.sound?'true':'false');
   var best=bestFor(d),mins=d/60+' min',h;
@@ -751,12 +817,13 @@ $$('.seg').forEach(function(b){b.addEventListener('click',function(){settings.du
 $('#swSound').addEventListener('click',function(){settings.sound=!settings.sound;saveSettings();renderSetup();if(settings.sound){ensureAudio();tone(660,.06)}});
 $('#btnSound').addEventListener('click',function(){settings.sound=!settings.sound;saveSettings();renderSetup();if(settings.sound){ensureAudio();tone(660,.06)}});
 $$('.nav-i').forEach(function(b){b.addEventListener('click',function(){
-  if(b.dataset.go==='records')renderRecords();else renderSetup();
-  show(b.dataset.go);
+  var g=b.dataset.go;
+  if(g==='records')renderRecords();else if(g==='ranks')renderRanks();else if(g==='account')renderAccount();else renderSetup();
+  show(g);
 })});
 
 /* ---------- run state ---------- */
-var S={run:null,cd:0,view:null,filter:'all',clearArm:0};
+var S={run:null,cd:0,view:null,filter:'all',clearArm:0,authMode:'in',rankDur:0,rankReq:0};
 
 function beginRun(o){
   ensureAudio();
@@ -911,10 +978,11 @@ function finish(reason){
       var st=computeStats(rec);
       if(st.correct>0&&st.correct>prevBest){rec.pb=true;label=prior.length?'New personal best':'First record set'}
       all.unshift(rec);if(all.length>MAX_REC)all.length=MAX_REC;
-      saved=store.set(LS_REC,all);
+      saved=store.set(recKey(),all);
     }
     renderResults(rec,{source:rec.mode==='retry'?'retry':'new',saved:saved,pbLabel:label});
     show('results');
+    if(rec.mode==='timed')syncRun(rec);
     tone(523,.12,'triangle',.06);tone(659,.12,'triangle',.06,.12);tone(784,.2,'triangle',.06,.24);buzz(30);
   }
   if(reason==='time'){
@@ -1029,7 +1097,7 @@ function renderResults(rec,opt){
   h+='<button class="btn outline" id="btnRetry" '+(missed.length?'':'disabled')+'>'+icon('target',20)+'<span>'+(missed.length?'Drill missed problems ('+missed.length+')':'No missed problems to drill')+'</span></button>';
   h+='<div class="two" style="margin-top:0"><button class="btn soft" id="btnCopy">'+icon('copy',18)+'<span>Copy scorecard</span></button><button class="btn soft" id="btnRecords">'+icon('history',18)+'<span>Records</span></button></div>';
   h+='<textarea class="fallback" id="cardFallback" readonly hidden aria-label="Scorecard text"></textarea>';
-  if(opt.source==='new')h+='<p class="saved">'+(opt.saved?icon('check',14)+'Saved to Records on this device':'Could not save: this browser blocked storage')+'</p>';
+  if(opt.source==='new')h+='<p class="saved">'+(opt.saved?icon('check',14)+'Saved to Records on this device':'Could not save: this browser blocked storage')+'</p>'+(rec.mode==='timed'?'<p class="saved" id="syncNote"></p>':'');
   else if(opt.source==='retry')h+='<p class="saved">Retry runs are practice and are not saved to Records.</p>';
   h+='</div></div>';
   $('#resultsRoot').innerHTML=h;
@@ -1107,12 +1175,116 @@ function renderRecords(){
 $('#btnClear').addEventListener('click',function(){
   var b=$('#btnClear');
   if(!S.clearArm){S.clearArm=1;b.classList.add('arm');b.querySelector('span').textContent='Tap again to erase everything';setTimeout(function(){if(S.clearArm){S.clearArm=0;b.classList.remove('arm');b.querySelector('span').textContent='Clear all records'}},3500);return}
-  store.set(LS_REC,[]);S.clearArm=0;renderRecords();renderSetup();toast('Records cleared');
+  store.set(recKey(),[]);S.clearArm=0;renderRecords();renderSetup();toast('Records cleared');
 });
+
+
+/* ---------- account, sync and leaderboard ---------- */
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var AUTH_ERR={taken:'That username is already taken.',invalid:'Wrong username or password.',locked:'Too many failed attempts. Try again in 10 minutes.',username:'Username must be 3 to 20 letters, numbers or underscores.',password:'Password must be 6 to 72 characters.',session:'Your session expired. Please sign in again.',rejected:'This run could not be verified.'};
+function renderWho(){
+  var b=$('#btnWho');if(!b)return;
+  if(session){b.className='who';b.innerHTML='<i>'+esc(session.username.charAt(0).toUpperCase())+'</i><span>'+esc(session.username)+'</span>'}
+  else{b.className='who guest';b.textContent='Sign in'}
+}
+$('#btnWho').addEventListener('click',function(){renderAccount();show('account')});
+
+function toServerRec(rec){return {id:rec.id,at:rec.at,mode:rec.mode,dur:rec.dur,pace:rec.pace,total:rec.total,elapsed:rec.elapsed,items:rec.items}}
+function markSynced(id){
+  var all=loadRecords();all.forEach(function(r){if(r.id===id)r.synced=true});store.set(recKey(),all);
+}
+function syncRun(rec){
+  var note=$('#syncNote');
+  function say(html){var n=$('#syncNote');if(n)n.innerHTML=html}
+  if(!session){
+    say('<button class="linkbtn" id="btnJoin">'+icon('trophy',14)+'Sign in to join the leaderboard</button>');
+    var j=$('#btnJoin');if(j)j.addEventListener('click',function(){renderAccount();show('account')});
+    return;
+  }
+  say('Sending to leaderboard…');
+  var who=session;
+  api('sempoa_submit_run',{p_token:who.token,p_rec:toServerRec(rec)}).then(function(r){
+    if(r&&r.ok){markSynced(rec.id);say(icon('check',14)+'Saved to your account'+(r.rank?' · rank #'+r.rank+' for '+(rec.dur/60)+' min':''))}
+    else if(r&&r.error==='session'){setSession(null);renderWho();say('Session expired. Sign in again to submit.')}
+    else say('Not added to the leaderboard: '+(AUTH_ERR[r&&r.error]||'rejected'))
+  }).catch(function(e){say('Offline: will retry later. '+esc(e.message))});
+}
+function pullAndPush(){
+  if(!session)return;
+  var who=session;
+  api('sempoa_my_runs',{p_token:who.token,p_limit:30}).then(function(rows){
+    if(!session||session.token!==who.token||!Array.isArray(rows))return;
+    var all=loadRecords(),have={};all.forEach(function(r){have[r.id]=1});
+    rows.forEach(function(rec){if(rec&&rec.id&&!have[rec.id]&&Array.isArray(rec.items)){rec.synced=true;all.push(rec)}});
+    all.sort(function(a,b){return b.at-a.at});if(all.length>MAX_REC)all.length=MAX_REC;
+    store.set(recKey(),all);
+    var pend=all.filter(function(r){return r.mode==='timed'&&!r.synced}).slice(0,5);
+    return pend.reduce(function(p,r){return p.then(function(){return api('sempoa_submit_run',{p_token:who.token,p_rec:toServerRec(r)}).then(function(x){if(x&&x.ok)markSynced(r.id)})})},Promise.resolve());
+  }).then(function(){renderSetup()}).catch(function(){});
+}
+
+function renderAccount(){
+  var el=$('#acctBody'),mode=S.authMode||'in';
+  if(session){
+    var n=loadRecords().length;
+    el.innerHTML='<div class="card me-card"><div class="av">'+esc(session.username.charAt(0).toUpperCase())+'</div><div><b>'+esc(session.username)+'</b><small>'+n+' run'+(n===1?'':'s')+' on this device · synced to your account</small></div></div>'+
+      '<div class="note-box">Your timed runs are added to the leaderboard automatically while you are signed in. Practice retries are never submitted.</div>'+
+      '<button class="btn outline" id="btnLogout">Sign out</button>';
+    $('#btnLogout').addEventListener('click',function(){
+      var t=session&&session.token;setSession(null);renderWho();renderSetup();renderAccount();toast('Signed out');
+      if(t)api('sempoa_logout',{p_token:t}).catch(function(){});
+    });
+    return;
+  }
+  el.innerHTML='<div class="tabs" role="tablist"><button class="tab'+(mode==='in'?' on':'')+'" data-m="in">Sign in</button><button class="tab'+(mode==='up'?' on':'')+'" data-m="up">Create account</button></div>'+
+    '<form class="form card" id="authForm" autocomplete="on" novalidate>'+
+    '<div class="fld"><label for="fUser">Username</label><input id="fUser" name="username" type="text" inputmode="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="20"'+(mode==='up'?'><small>3 to 20 letters, numbers or underscores. Shown on the leaderboard.</small>':'>')+'</div>'+
+    '<div class="fld"><label for="fPass">Password</label><input id="fPass" name="password" type="password" autocomplete="'+(mode==='up'?'new-password':'current-password')+'" maxlength="72"'+(mode==='up'?'><small>At least 6 characters. There is no password reset, so keep it somewhere safe.</small>':'>')+'</div>'+
+    '<p class="ferr" id="authErr" role="alert"></p>'+
+    '<button class="btn primary" id="btnAuth" type="submit">'+(mode==='up'?'Create account':'Sign in')+'</button></form>'+
+    '<div class="note-box">You can play without an account. An account adds your runs to the leaderboard and keeps your records across devices.</div>';
+  $$('#acctBody .tab').forEach(function(t){t.addEventListener('click',function(){S.authMode=t.dataset.m;renderAccount()})});
+  $('#authForm').addEventListener('submit',function(ev){
+    ev.preventDefault();
+    var u=$('#fUser').value.trim(),p=$('#fPass').value,err=$('#authErr'),btn=$('#btnAuth');
+    err.textContent='';
+    if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){err.textContent=AUTH_ERR.username;return}
+    if(p.length<6||p.length>72){err.textContent=mode==='up'?AUTH_ERR.password:AUTH_ERR.invalid;return}
+    btn.disabled=true;btn.textContent='Please wait…';
+    api(mode==='up'?'sempoa_signup':'sempoa_login',{p_username:u,p_password:p}).then(function(r){
+      if(r&&r.ok){
+        setSession({token:r.token,username:r.username});renderWho();renderSetup();renderAccount();
+        toast(mode==='up'?'Account created':'Signed in');pullAndPush();
+      }else{err.textContent=AUTH_ERR[r&&r.error]||'Something went wrong.';btn.disabled=false;btn.textContent=mode==='up'?'Create account':'Sign in'}
+    }).catch(function(e){err.textContent=e.message;btn.disabled=false;btn.textContent=mode==='up'?'Create account':'Sign in'});
+  });
+}
+
+function renderRanks(){
+  var d=S.rankDur||settings.duration;S.rankDur=d;
+  $('#rankChips').innerHTML=DURS.map(function(x){return '<button class="chip'+(x===d?' on':'')+'" role="tab" data-d="'+x+'">'+(x/60)+' min</button>'}).join('');
+  $$('#rankChips .chip').forEach(function(c){c.addEventListener('click',function(){S.rankDur=+c.dataset.d;renderRanks()})});
+  var body=$('#rankBody'),stamp=++S.rankReq;
+  body.innerHTML='<div class="empty"><p>Loading…</p></div>';
+  api('sempoa_leaderboard',{p_duration:d,p_token:session?session.token:null}).then(function(r){
+    if(stamp!==S.rankReq)return;
+    var rows=(r&&r.top)||[],me=r&&r.me;
+    function row(x){
+      return '<div class="lb-row p'+(x.rank<=3?x.rank:0)+(x.me?' me':'')+'"><span class="lb-pos">'+x.rank+'</span><span class="lb-name">'+esc(x.username)+(x.me?' (you)':'')+'</span><span class="lb-sc"><b>'+x.correct+'<em> / '+TOTAL+'</em></b><small>'+(x.avg_ms!=null?(x.avg_ms/1000).toFixed(2)+'s avg':'')+'</small></span></div>';
+    }
+    if(!rows.length){body.innerHTML='<div class="empty"><span class="e-ic">'+icon('trophy',28)+'</span><b>No scores yet</b><p>Be the first on the '+(d/60)+'-minute board.'+(session?'':' Create an account and finish a run.')+'</p></div>';return}
+    var h='<div class="lb">'+rows.map(row).join('');
+    if(me&&!rows.some(function(x){return x.me}))h+='<div class="lb-gap">···</div>'+row(me);
+    h+='</div>';
+    if(!session)h+='<div class="note-box" style="margin-top:12px">Sign in to appear on this board.</div>';
+    body.innerHTML=h;
+  }).catch(function(e){if(stamp!==S.rankReq)return;body.innerHTML='<div class="empty"><span class="e-ic">'+icon('trophy',28)+'</span><b>Leaderboard unavailable</b><p>'+esc(e.message)+'</p><button class="btn primary" id="rankRetry" style="margin-top:6px">Try again</button></div>';$('#rankRetry').addEventListener('click',renderRanks)});
+}
 
 /* ---------- init ---------- */
 renderSetup();
 show('setup');
+pullAndPush();
 })();
 </script>
 </body>
