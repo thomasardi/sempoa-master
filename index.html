@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#ea580c">
-<meta name="description" content="Soroban speed drill: 80 mental-arithmetic problems in 1, 2 or 3 minutes.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='2' y='3' width='36' height='34' rx='9' fill='%23ea580c'/%3E%3Crect x='6' y='18.5' width='28' height='3' rx='1.5' fill='%23fff'/%3E%3Cg fill='%23fff'%3E%3Cellipse cx='13' cy='14' rx='4.2' ry='2.2'/%3E%3Cellipse cx='20' cy='11.5' rx='4.2' ry='2.2'/%3E%3Cellipse cx='27' cy='14' rx='4.2' ry='2.2'/%3E%3Cellipse cx='13' cy='25' rx='4.2' ry='2.2'/%3E%3Cellipse cx='20' cy='29.2' rx='4.2' ry='2.2'/%3E%3Cellipse cx='27' cy='25' rx='4.2' ry='2.2'/%3E%3C/g%3E%3C/svg%3E">
-<title>Sempoa Master</title>
+<meta name="description" content="Math Master: 80 mental-math problems in 1, 2 or 3 minutes, from single digits to three digits.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='2' y='3' width='36' height='34' rx='9' fill='%23ea580c'/%3E%3Cg stroke='%23fff' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M10 15h12M16 9v12'/%3E%3Cpath d='M18 30h14'/%3E%3Cpath d='M26 14h6'/%3E%3C/g%3E%3C/svg%3E">
+<title>Math Master</title>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0}img{max-width:100%}</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
 <style>
@@ -279,12 +279,8 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .cmp span.l{font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .cmp b{font:800 22px/1 var(--font-num);letter-spacing:-.04em}
 .cmp .you b{color:var(--bad)} .cmp .ok b{color:var(--good)}
-.abacus{width:100%;max-width:104px;height:auto;display:block}
-.ab-frame{fill:none;stroke:var(--line-strong);stroke-width:1.5}
-.ab-beam{fill:var(--accent-text);opacity:.85}
-.ab-rod{stroke:var(--line-strong);stroke-width:1.4}
-.ab-bead{fill:var(--accent)}
-.ab-diff.you{fill:var(--bad-soft)} .ab-diff.ok{fill:var(--good-soft)}
+.cmp b u{text-decoration:none;border-radius:6px;padding:0 2px;margin:0 -1px}
+.cmp .you b u{background:var(--bad-soft)} .cmp .ok b u{background:var(--good-soft)}
 .cause{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:13px;background:var(--accent-soft);color:var(--fg)}
 .cause .ic{color:var(--accent-text);margin-top:1px}
 .cause b{font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--accent-text);display:block}
@@ -398,20 +394,17 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
         <div class="brand">
           <svg class="logo" viewBox="0 0 40 40" aria-hidden="true">
             <rect x="2" y="3" width="36" height="34" rx="9" fill="var(--accent)"/>
-            <rect x="6" y="18.5" width="28" height="3" rx="1.5" fill="#fff" opacity=".92"/>
-            <g stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".55"><path d="M13 7v26M20 7v26M27 7v26"/></g>
-            <g fill="#fff"><ellipse cx="13" cy="14" rx="4.2" ry="2.2"/><ellipse cx="20" cy="11.5" rx="4.2" ry="2.2"/><ellipse cx="27" cy="14" rx="4.2" ry="2.2"/>
-            <ellipse cx="13" cy="25" rx="4.2" ry="2.2"/><ellipse cx="13" cy="29.2" rx="4.2" ry="2.2"/><ellipse cx="20" cy="29.2" rx="4.2" ry="2.2"/><ellipse cx="27" cy="25" rx="4.2" ry="2.2"/></g>
+            <g stroke="#fff" stroke-width="3.2" stroke-linecap="round"><path d="M10 15h12M16 9v12"/><path d="M18 30h14"/><path d="M26 14h6" opacity=".6"/></g>
           </svg>
-          <span class="brand-name">Sempoa Master</span>
+          <span class="brand-name">Math Master</span>
         </div>
         <div style="display:flex;align-items:center;gap:4px"><button class="who guest" id="btnWho" aria-label="Account"></button><button class="icon-btn" id="btnSound" aria-label="Sound and haptics" aria-pressed="true"></button></div>
       </header>
 
       <div class="intro">
         <span class="eyebrow">Time attack</span>
-        <h1>Soroban Speed Drill</h1>
-        <p class="sub">80 mental-arithmetic problems. Choose how long you get.</p>
+        <h1>Speed Math Drill</h1>
+        <p class="sub">80 mental-math problems. Choose how long you get.</p>
       </div>
 
       <div class="field">
@@ -429,7 +422,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 
       <div class="card module">
         <span class="m-ic" data-ic="calc"></span>
-        <div><b>Addition &amp; subtraction</b><small>3–5 numbers, 1–2 digits, easy to very hard. The running total never drops below 0 or above 150.</small></div>
+        <div><b>Addition &amp; subtraction</b><small>2–5 numbers, from single digits up to three digits. The running total never drops below 1.</small></div>
         <span class="m-ok" data-ic="check"></span>
       </div>
 
@@ -476,7 +469,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
   <!-- RECORDS -->
   <section class="screen" id="s-records" data-s="records" hidden>
     <div class="wrap">
-      <header class="topbar"><div><span class="eyebrow">Sempoa Master</span><h1 class="h-sm">Records</h1></div></header>
+      <header class="topbar"><div><span class="eyebrow">Math Master</span><h1 class="h-sm">Records</h1></div></header>
       <div class="pb-grid" id="pbGrid"></div>
       <div class="chips" id="chips" role="tablist" aria-label="Filter by session length"></div>
       <div id="recList"></div>
@@ -488,7 +481,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
   <!-- LEADERBOARD -->
   <section class="screen" id="s-ranks" data-s="ranks" hidden>
     <div class="wrap">
-      <header class="topbar"><div><span class="eyebrow">Sempoa Master</span><h1 class="h-sm">Leaderboard</h1></div></header>
+      <header class="topbar"><div><span class="eyebrow">Math Master</span><h1 class="h-sm">Leaderboard</h1></div></header>
       <p class="sub">Ranked by correct answers, then by faster average time per answer. Each player counts once, with their best run.</p>
       <div class="chips" id="rankChips" role="tablist" aria-label="Session length"></div>
       <div id="rankBody"></div>
@@ -498,7 +491,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
   <!-- ACCOUNT -->
   <section class="screen" id="s-account" data-s="account" hidden>
     <div class="wrap">
-      <header class="topbar"><div><span class="eyebrow">Sempoa Master</span><h1 class="h-sm">Account</h1></div></header>
+      <header class="topbar"><div><span class="eyebrow">Math Master</span><h1 class="h-sm">Account</h1></div></header>
       <div id="acctBody"></div>
     </div>
   </section>
@@ -559,7 +552,7 @@ var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelect
 var TOTAL=80, DURS=[60,120,180];
 var NAMES={60:'Blitz',120:'Sprint',180:'Endurance'};
 var LS_SET='sempoa.settings.v1', LS_REC='sempoa.records.v1', MAX_REC=50;
-var RODS=['units','tens','hundreds','thousands'];
+var RODS=['ones','tens','hundreds','thousands'];
 var reduced=false; try{reduced=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}catch(e){}
 
 /* ---------- storage (per browser; always guarded) ---------- */
@@ -653,83 +646,69 @@ function tone(f,d,type,vol,when){
 }
 function buzz(ms){if(settings.sound&&navigator.vibrate){try{navigator.vibrate(ms||8)}catch(e){}}}
 
-/* ---------- problem generator: 4 levels, simple to very hard ----------
-   Rules applied to every problem, at every step:
-   - first row is larger than the second row
-   - running total stays between 1 and MAX_TOTAL (so no negative step or result, final answer <= 150)
-   - when subtracting, the units digit of the running total is not smaller than the units digit of the
-     number taken away (no borrowing from the tens)                                                      */
-var MAX_TOTAL=150;
-var LEVELS=[
-  {name:'Simple',   rows:3,desc:'3 numbers · 1 digit'},
-  {name:'Medium',   rows:3,desc:'3 numbers · 2 digits'},
-  {name:'Hard',     rows:4,desc:'4 numbers · mixed 1 and 2 digits'},
-  {name:'Very hard',rows:5,desc:'5 numbers · mixed 1 and 2 digits'}
+/* ---------- problem generator ----------
+   The 80 questions follow a fixed table (STAGES). Each stage fixes the number of rows and how many digits each
+   row has. Rules for every problem: the first row is added, the running total never drops below 1, at least one
+   row is subtracted, and no two neighbouring rows are the same number. Largest possible answer: 5 rows of 3 digits. */
+var MAX_TOTAL=9999;
+var LEVELS={
+  0:{name:'Simple',desc:'3 numbers · 1 digit'},1:{name:'Medium',desc:'3 numbers · 2 digits'},
+  2:{name:'Hard',desc:'4 numbers · mixed 1 and 2 digits'},3:{name:'Very hard',desc:'5 numbers · mixed 1 and 2 digits'},
+  10:{name:'1-digit',desc:'Single-digit numbers · 3 to 5 rows'},
+  11:{name:'2-digit',desc:'Up to 2-digit numbers · 2 to 5 rows'},
+  12:{name:'3-digit',desc:'Up to 3-digit numbers · 5 rows'}
+};
+/* to = last question number of the stage. d = digits per row. mix:[rows,maxDigits] = every row random 1..max digits,
+   at least one row at max. ratio = 5 rows, 1-digit rows first (about 70%) then 2-digit rows (about 30%). */
+var STAGES=[
+  {to:3, lv:10,d:[1,1,1]},
+  {to:10,lv:10,d:[1,1,1,1]},
+  {to:13,lv:11,d:[2,1]},
+  {to:18,lv:11,d:[2,1,2]},
+  {to:23,lv:10,d:[1,1,1,1]},
+  {to:30,lv:11,mix:[4,2]},
+  {to:33,lv:10,d:[1,1,1,1,1]},
+  {to:40,lv:11,ratio:true},
+  {to:50,lv:12,d:[3,2,1,1,1]},
+  {to:80,lv:12,mix:[5,3]}
 ];
-var FALLBACK=[[9,-6,3],[27,15,-4],[73,8,17,-4],[27,8,-12,31,-7]];
-function pickOne(arr){return arr.length?arr[Math.floor(Math.random()*arr.length)]:null}
-function makeProblem(lv){
-  var rows=LEVELS[lv].rows;
-  for(var tries=0;tries<800;tries++){
-    var ops=[],total=0,minus=false,ok=true;
-    for(var i=0;i<rows&&ok;i++){
-      var oneDigit;
-      if(lv===0)oneDigit=true;
-      else if(lv===1)oneDigit=(i===2&&Math.random()<.35);
-      else oneDigit=(i>0&&Math.random()<.5);
-      var lo=oneDigit?(i===0?2:1):10,hi=oneDigit?9:99;
-      var cand=function(isMinus){
-        var c=[];
-        for(var v=lo;v<=hi;v++){
-          if(i===1&&v>=ops[0])continue;
-          if(isMinus){if(v>total-1||v%10>total%10)continue}
-          else if(total+v>MAX_TOTAL)continue;
-          c.push(v);
-        }
-        return pickOne(c);
-      };
-      if(i===0){ops.push(cand(false));total=ops[0];continue}
-      var wantMinus=Math.random()<.5,v=null,neg=false;
-      if(wantMinus){v=cand(true);neg=v!=null}
-      if(v==null){v=cand(false);neg=false}
-      if(v==null&&!wantMinus){v=cand(true);neg=v!=null}
-      if(v==null){ok=false;break}
+function rnd(a,b){return a+Math.floor(Math.random()*(b-a+1))}
+function stageOf(i,n){var q=(n===TOTAL?i:Math.floor(i*TOTAL/n))+1;for(var k=0;k<STAGES.length;k++)if(q<=STAGES[k].to)return STAGES[k];return STAGES[STAGES.length-1]}
+function shapeOf(st){
+  if(st.d)return st.d.slice();
+  if(st.ratio){var k2=rnd(1,2),a=[],i;for(i=0;i<5-k2;i++)a.push(1);for(i=0;i<k2;i++)a.push(2);return a}
+  var rows=st.mix[0],mx=st.mix[1],a=[],i;
+  for(i=0;i<rows;i++)a.push(rnd(1,mx));
+  if(a.indexOf(mx)<0)a[rnd(0,rows-1)]=mx;
+  return a;
+}
+function makeProblem(st){
+  for(var tries=0;tries<1500;tries++){
+    var shape=shapeOf(st),ops=[],total=0,minus=false,ok=true;
+    for(var i=0;i<shape.length&&ok;i++){
+      var lo=shape[i]===1?(i===0?2:1):Math.pow(10,shape[i]-1),hi=Math.pow(10,shape[i])-1,v,neg=false;
+      if(i===0)v=rnd(lo,hi);
+      else if(Math.random()<.45&&total-1>=lo){v=rnd(lo,Math.min(hi,total-1));neg=true}
+      else v=rnd(lo,hi);
+      if(v===Math.abs(ops[i-1]))ok=false;
       ops.push(neg?-v:v);total+=neg?-v:v;if(neg)minus=true;
     }
-    if(!ok||!minus||total<1||total>MAX_TOTAL)continue;
-    if(lv>=2){
-      var ones=0,twos=0;ops.forEach(function(v){if(Math.abs(v)<10)ones++;else twos++});
-      if(ones<1||twos<2)continue;
-    }
-    return ops;
+    if(ok&&minus&&total>=1&&total<=MAX_TOTAL)return ops;
   }
-  return FALLBACK[lv].slice();
-}
-/* Difficulty curve for the 80-question run: [count, {level: share}] per band.
-   Q1-3 easy | Q4-10 medium | Q11-20 70% med 30% hard | Q21-30 30/50/20 med/hard/very hard
-   Q31-50 10/30/60 med/hard/very hard | Q51-80 100% very hard. Levels: 0 easy, 1 medium, 2 hard, 3 very hard. */
-var BANDS=[[3,{0:3}],[7,{1:7}],[10,{1:7,2:3}],[10,{1:3,2:5,3:2}],[20,{1:2,2:6,3:12}],[30,{3:30}]];
-function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
-function levelPlan(n){
-  var plan=[];
-  if(n===TOTAL){
-    BANDS.forEach(function(b){
-      var lvs=[];Object.keys(b[1]).forEach(function(k){for(var i=0;i<b[1][k];i++)lvs.push(+k)});
-      shuffle(lvs).forEach(function(l){plan.push(l)});
-    });
-  }else{for(var i=0;i<n;i++)plan.push(Math.min(3,Math.floor(i*4/n)))}
-  return plan;
+  var sh=shapeOf(st),o=[],t=0;
+  sh.forEach(function(d,i){var v=i===0?Math.pow(10,d)-1:Math.pow(10,d-1);if(i>0&&t>v){o.push(-v);t-=v}else{o.push(v);t+=v}});
+  return o;
 }
 function genProblems(n){
-  var plan=levelPlan(n),out=[],seen={},guard=0;
-  plan.forEach(function(lv){
-    var ops,k;
-    do{ops=makeProblem(lv);k=ops.join(',')}while(seen[k]&&guard++<3000);
-    seen[k]=1;out.push({ops:ops,lv:lv});
-  });
+  var out=[],seen={},guard=0;
+  for(var i=0;i<n;i++){
+    var st=stageOf(i,n),ops,k;
+    do{ops=makeProblem(st);k=ops.join(',')}while(seen[k]&&guard++<3000);
+    seen[k]=1;out.push({ops:ops,lv:st.lv});
+  }
   return out;
 }
-function levelOf(it,i,total){if(it.l!=null)return it.l;if(total!==TOTAL)return null;var c=0;for(var b=0;b<BANDS.length;b++){c+=BANDS[b][0];if(i<c){var ks=Object.keys(BANDS[b][1]);return +ks[0]}}return 3}
+function levelOf(it){return it.l!=null?it.l:null}
 
 /* ---------- stats + error diagnosis ---------- */
 function computeStats(rec){
@@ -754,32 +733,22 @@ function diagnose(it){
   for(i=0;i<it.o.length;i++){v=it.o[i];if(diff===-v)return{g:'skip',t:'Looks like '+sg(v)+' was left out of the running total.'}}
   for(i=0;i<it.o.length;i++){v=it.o[i];if(diff===v)return{g:'dup',t:'Looks like '+sg(v)+' was applied twice.'}}
   for(i=0;i<it.o.length;i++){v=it.o[i];if(diff===-2*v)return{g:'sign',t:'Looks like '+sg(v)+' was applied with the opposite sign.'}}
-  for(k=3;k>=0;k--){if(ad===5*Math.pow(10,k))return{g:'five',t:'The heaven bead (5) on the '+RODS[k]+' rod was missed or added.'}}
-  for(k=3;k>=1;k--){if(ad===Math.pow(10,k))return{g:'carry',t:'The '+RODS[k]+' rod is off by one. A carry or borrow from the '+RODS[k-1]+' rod was probably missed.'}}
-  if(ad<10)return{g:'unit',t:'The units rod is off by '+ad+'. Recheck the last-digit step.'};
+  for(k=3;k>=1;k--){if(ad===Math.pow(10,k))return{g:'carry',t:'The '+RODS[k]+' digit is off by one. A carry or borrow from the '+RODS[k-1]+' digit was probably missed.'}}
+  if(ad<10)return{g:'unit',t:'The ones digit is off by '+ad+'. Recheck the last-digit step.'};
   var L=Math.max(String(it.g).length,String(it.a).length),gs=String(it.g).padStart(L,'0'),as=String(it.a).padStart(L,'0'),dif=[];
   for(i=0;i<L;i++)if(gs[i]!==as[i])dif.push(L-1-i);
-  if(dif.length===1)return{g:'rod',t:'Only the '+(RODS[dif[0]]||'highest')+' rod differs. Recheck that column.'};
+  if(dif.length===1)return{g:'rod',t:'Only the '+(RODS[dif[0]]||'highest')+' digit differs. Recheck that column.'};
   if(gs.split('').sort().join('')===as.split('').sort().join(''))return{g:'swap',t:'The digits look swapped when the answer was entered.'};
   return{g:'other',t:'No single-slip pattern found. Walk the running total step by step.'};
 }
-var GROUP_LABEL={skip:'a number left out',dup:'a number applied twice',sign:'a wrong sign',five:'heaven-bead (5) slips',carry:'missed carries or borrows',unit:'units-digit slips',rod:'single-column slips',swap:'swapped digits'};
+var GROUP_LABEL={skip:'a number left out',dup:'a number applied twice',sign:'a wrong sign',carry:'missed carries or borrows',unit:'ones-digit slips',rod:'single-digit slips',swap:'swapped digits'};
 function chainOf(ops){var t=0;return ops.map(function(v){t+=v;return t})}
 
-/* ---------- abacus drawing (4 earth beads, 1 heaven bead) ---------- */
-function abacus(val,rods,cls,other){
-  var s=String(val).padStart(rods,'0'),o=String(other).padStart(rods,'0'),W=rods*20+8,H=66,g='';
-  g+='<svg class="abacus" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Soroban showing '+val+'">';
-  for(var i=0;i<rods;i++){if(s[i]!==o[i])g+='<rect class="ab-diff '+cls+'" x="'+(4+i*20)+'" y="3" width="20" height="'+(H-6)+'" rx="4"/>'}
-  g+='<rect class="ab-frame" x="1" y="1" width="'+(W-2)+'" height="'+(H-2)+'" rx="6"/>';
-  for(i=0;i<rods;i++){
-    var cx=14+i*20,d=+s[i],up=d>=5,k=d%5;
-    g+='<line class="ab-rod" x1="'+cx+'" y1="4" x2="'+cx+'" y2="'+(H-4)+'"/>';
-    g+='<ellipse class="ab-bead" cx="'+cx+'" cy="'+(up?17:9)+'" rx="7.5" ry="3.6"/>';
-    for(var b=0;b<4;b++){var y=b<k?28.5+b*7.6:58.5-(3-b)*7.6;g+='<ellipse class="ab-bead" cx="'+cx+'" cy="'+y.toFixed(1)+'" rx="7.5" ry="3.6"/>'}
-  }
-  g+='<rect class="ab-beam" x="1" y="21" width="'+(W-2)+'" height="3.5"/></svg>';
-  return g;
+/* ---------- digit comparison: digits that differ from the other number are highlighted ---------- */
+function digits(val,other){
+  var a=String(val),b=String(other),L=Math.max(a.length,b.length),pa=a.padStart(L,' '),pb=b.padStart(L,' '),h='';
+  for(var i=0;i<L;i++){if(pa[i]===' ')continue;h+=pa[i]!==pb[i]?'<u>'+pa[i]+'</u>':pa[i]}
+  return h;
 }
 
 /* ---------- screens ---------- */
@@ -843,7 +812,7 @@ function startTimed(){
 }
 function startRetry(rec){
   var probs=[];
-  rec.items.forEach(function(it,i){if(it.s==='bad'||it.s==='skip')probs.push({ops:it.o.slice(),lv:levelOf(it,i,rec.total)})});
+  rec.items.forEach(function(it,i){if(it.s==='bad'||it.s==='skip')probs.push({ops:it.o.slice(),lv:levelOf(it)})});
   if(!probs.length)return;
   beginRun({mode:'retry',limit:null,pace:rec.pace,problems:probs});
 }
@@ -922,9 +891,9 @@ function setKeypad(open){
 window.addEventListener('resize',function(){if(S.run&&!S.run.done)setKpPad()});
 function pressKey(d){
   var r=S.run;if(!r||r.paused||r.done)return;
-  if(r.input.length>=3)return;
+  if(r.input.length>=4)return;
   if(d==='00'&&(r.input===''||r.input==='0'))d='0';
-  if(r.input.length+d.length>3)d=d.slice(0,3-r.input.length);
+  if(r.input.length+d.length>4)d=d.slice(0,4-r.input.length);
   r.input=r.input==='0'?d:r.input+d;showInput();tone(520,.035,'triangle',.05);buzz(6);
 }
 function backspace(){var r=S.run;if(!r||r.paused||r.done)return;r.input=r.input.slice(0,-1);showInput();tone(360,.035,'triangle',.04);buzz(6)}
@@ -982,7 +951,7 @@ function finish(reason){
   var elapsed=r.limit!=null?Math.min(activeMs(),r.limit):activeMs();
   setKeypad(false);
   function go(){
-    var rec={id:Date.now(),at:Date.now(),mode:r.mode,dur:r.limit!=null?r.limit/1000:null,pace:r.pace,total:r.items.length,elapsed:Math.round(elapsed),pb:false,
+    var rec={id:Date.now(),at:Date.now(),mode:r.mode,dur:r.limit!=null?r.limit/1000:null,pace:r.pace,total:r.items.length,elapsed:Math.round(elapsed),pb:false,v:2,
       items:r.items.map(function(i){return{o:i.ops,l:i.lv,g:i.given,a:i.ans,t:i.ms,s:i.st}})};
     var saved=false,label='';
     if(rec.mode==='timed'){
@@ -1023,12 +992,12 @@ function paceChart(rec,st){
   return g;
 }
 function missCard(it,idx){
-  var skipped=it.s==='skip',rods=Math.max(3,String(it.a).length,String(it.g==null?0:it.g).length),dg=skipped?null:diagnose(it),ch=chainOf(it.o);
+  var skipped=it.s==='skip',dg=skipped?null:diagnose(it),ch=chainOf(it.o);
   var h='<article class="miss"><div class="miss-top"><span class="pill '+(skipped?'':'bad')+'">Q #'+(idx+1)+'</span><span class="pill">'+it.o.length+' numbers</span><span class="mt mono">'+icon('timer',14)+(it.t/1000).toFixed(1)+'s</span></div>';
   h+='<div class="formula mono">'+formula(it.o)+'</div><div class="chain mono">'+ch.join(' → ')+'</div><div class="cmp">';
   if(skipped)h+='<div style="border-color:var(--line-strong)"><span class="l">Your answer</span><b class="mono" style="color:var(--muted)">Skipped</b></div>';
-  else h+='<div class="you"><span class="l">You</span><b>'+it.g+'</b>'+abacus(it.g,rods,'you',it.a)+'</div>';
-  h+='<div class="ok"><span class="l">Correct</span><b>'+it.a+'</b>'+abacus(it.a,rods,'ok',skipped?it.a:it.g)+'</div></div>';
+  else h+='<div class="you"><span class="l">You</span><b>'+digits(it.g,it.a)+'</b></div>';
+  h+='<div class="ok"><span class="l">Correct</span><b>'+(skipped?it.a:digits(it.a,it.g))+'</b></div></div>';
   if(dg)h+='<div class="cause">'+icon('bulb',18)+'<div><b>Likely cause</b><p>'+dg.t+'</p></div></div>';
   return h+'</article>';
 }
@@ -1076,16 +1045,16 @@ function renderResults(rec,opt){
   if(st.answered)h+=paceChart(rec,st)+'<div class="legend"><span><i class="dash"></i>Target pace</span><span><i style="background:var(--bad-fill)"></i>Wrong answer</span></div>';
   h+='</section>';
   /* by level */
-  var lv=[0,1,2,3].map(function(){return{n:0,a:0,c:0,ms:0}}),anyLv=false;
+  var lv={},anyLv=false;
   rec.items.forEach(function(it,i){
-    var l=levelOf(it,i,rec.total);if(l==null)return;anyLv=true;
-    var o=lv[l];o.n++;if(it.s==='ok'||it.s==='bad'){o.a++;o.ms+=it.t}if(it.s==='ok')o.c++;
+    var l=levelOf(it);if(l==null||!LEVELS[l])return;anyLv=true;
+    var o=lv[l]||(lv[l]={n:0,a:0,c:0,ms:0});o.n++;if(it.s==='ok'||it.s==='bad'){o.a++;o.ms+=it.t}if(it.s==='ok')o.c++;
   });
   if(anyLv){
     h+='<section class="card" style="--i:'+(n++)+'"><div class="sec-h"><h2>'+icon('trend',20)+'By level</h2></div>';
-    lv.forEach(function(o,l){
-      if(!o.n)return;
-      h+='<div class="kv"><div class="k1"><b>Level '+(l+1)+' · '+LEVELS[l].name+'</b><small>'+LEVELS[l].desc+'</small></div><div class="k2"><b class="mono">'+o.c+' / '+o.n+'</b><small class="mono" style="color:var(--muted)">'+(o.a?(o.ms/o.a/1000).toFixed(2)+'s avg':'not reached')+'</small></div></div>';
+    Object.keys(lv).sort(function(x,y){return x-y}).forEach(function(l){
+      var o=lv[l];
+      h+='<div class="kv"><div class="k1"><b>'+LEVELS[l].name+'</b><small>'+LEVELS[l].desc+'</small></div><div class="k2"><b class="mono">'+o.c+' / '+o.n+'</b><small class="mono" style="color:var(--muted)">'+(o.a?(o.ms/o.a/1000).toFixed(2)+'s avg':'not reached')+'</small></div></div>';
     });
     h+='</section>';
   }
@@ -1124,7 +1093,7 @@ function renderResults(rec,opt){
   },60);
 }
 function scorecardText(rec,st){
-  return 'Sempoa Master · '+(rec.dur?(rec.dur/60)+'-min drill':'Mistakes retry')+'\n'+
+  return 'Math Master · '+(rec.dur?(rec.dur/60)+'-min drill':'Mistakes retry')+'\n'+
     'Solved '+st.correct+'/'+rec.total+' · Accuracy '+(st.acc==null?'n/a':Math.round(st.acc*100)+'%')+' · Score '+st.score+'\n'+
     'Avg '+(st.avg==null?'n/a':fmtS(st.avg))+' per answer (target '+fmtS(rec.pace*1000)+') · Best streak '+st.best;
 }
@@ -1202,7 +1171,7 @@ function renderWho(){
 }
 $('#btnWho').addEventListener('click',function(){renderAccount();show('account')});
 
-function toServerRec(rec){return {id:rec.id,at:rec.at,mode:rec.mode,dur:rec.dur,pace:rec.pace,total:rec.total,elapsed:rec.elapsed,items:rec.items}}
+function toServerRec(rec){return {id:rec.id,at:rec.at,mode:rec.mode,dur:rec.dur,pace:rec.pace,total:rec.total,elapsed:rec.elapsed,v:2,items:rec.items}}
 function markSynced(id){
   var all=loadRecords();all.forEach(function(r){if(r.id===id)r.synced=true});store.set(recKey(),all);
 }
@@ -1231,7 +1200,7 @@ function pullAndPush(){
     rows.forEach(function(rec){if(rec&&rec.id&&!have[rec.id]&&Array.isArray(rec.items)){rec.synced=true;all.push(rec)}});
     all.sort(function(a,b){return b.at-a.at});if(all.length>MAX_REC)all.length=MAX_REC;
     store.set(recKey(),all);
-    var pend=all.filter(function(r){return r.mode==='timed'&&!r.synced}).slice(0,5);
+    var pend=all.filter(function(r){return r.mode==='timed'&&!r.synced&&r.v===2}).slice(0,5);
     return pend.reduce(function(p,r){return p.then(function(){return api('sempoa_submit_run',{p_token:who.token,p_rec:toServerRec(r)}).then(function(x){if(x&&x.ok)markSynced(r.id)})})},Promise.resolve());
   }).then(function(){renderSetup()}).catch(function(){});
 }
