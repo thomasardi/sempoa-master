@@ -1168,7 +1168,7 @@ $('#btnClear').addEventListener('click',function(){
 
 /* ---------- account, sync and leaderboard ---------- */
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-var AUTH_ERR={taken:'That username is already taken.',invalid:'Wrong username or password.',locked:'Too many failed attempts. Try again in 10 minutes.',username:'Username must be 3 to 20 letters, numbers or underscores.',password:'Password must be 6 to 72 characters.',session:'Your session expired. Please sign in again.',rejected:'This run could not be verified.'};
+var AUTH_ERR={invalid:'Wrong username or password.',locked:'Too many failed attempts. Try again in 10 minutes.',username:'Username must be 3 to 20 letters, numbers or underscores.',password:'Password must be 6 to 72 characters.',session:'Your session expired. Please sign in again.',rejected:'This run could not be verified.'};
 function renderWho(){
   var b=$('#btnWho');if(!b)return;
   if(session){b.className='who';b.innerHTML='<i>'+esc(session.username.charAt(0).toUpperCase())+'</i><span>'+esc(session.username)+'</span>'}
@@ -1211,8 +1211,8 @@ function pullAndPush(){
 }
 
 function renderAccount(){
-  var el=$('#acctBody'),mode=S.authMode||'in';
-  var hh=$('#s-account h1');if(hh)hh.textContent=session?'Account':(mode==='up'?'Create your account':'Welcome back');
+  var el=$('#acctBody');
+  var hh=$('#s-account h1');if(hh)hh.textContent=session?'Account':'Sign in or create account';
   if(session){
     var n=loadRecords().length;
     el.innerHTML='<div class="card me-card"><div class="av">'+esc(session.username.charAt(0).toUpperCase())+'</div><div><b>'+esc(session.username)+'</b><small>'+n+' run'+(n===1?'':'s')+' on this device · synced to your account</small></div></div>'+
@@ -1224,27 +1224,25 @@ function renderAccount(){
     });
     return;
   }
-  el.innerHTML='<div class="tabs" role="tablist"><button class="tab'+(mode==='in'?' on':'')+'" data-m="in">Sign in</button><button class="tab'+(mode==='up'?' on':'')+'" data-m="up">Create account</button></div>'+
-    '<form class="form card" id="authForm" autocomplete="on" novalidate>'+
-    '<div class="fld"><label for="fUser">Username</label><input id="fUser" name="username" type="text" inputmode="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="20"'+(mode==='up'?'><small>3 to 20 letters, numbers or underscores. Shown on the leaderboard.</small>':'>')+'</div>'+
-    '<div class="fld"><label for="fPass">Password</label><input id="fPass" name="password" type="password" autocomplete="'+(mode==='up'?'new-password':'current-password')+'" maxlength="72"'+(mode==='up'?'><small>At least 6 characters. There is no password reset, so keep it somewhere safe.</small>':'>')+'</div>'+
+  el.innerHTML='<form class="form card" id="authForm" autocomplete="on" novalidate>'+
+    '<div class="fld"><label for="fUser">Username</label><input id="fUser" name="username" type="text" inputmode="text" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="20"><small>3 to 20 letters, numbers or underscores. Shown on the leaderboard.</small></div>'+
+    '<div class="fld"><label for="fPass">Password</label><input id="fPass" name="password" type="password" autocomplete="current-password" maxlength="72"><small>At least 6 characters. There is no password reset, so keep it somewhere safe.</small></div>'+
     '<p class="ferr" id="authErr" role="alert"></p>'+
-    '<button class="btn primary" id="btnAuth" type="submit">'+(mode==='up'?'Create account':'Sign in')+'</button></form>'+
-    '<div class="note-box">An account is required to play. Your runs and records are saved to it and ranked on the leaderboard, on any device.</div>';
-  $$('#acctBody .tab').forEach(function(t){t.addEventListener('click',function(){S.authMode=t.dataset.m;renderAccount()})});
+    '<button class="btn primary" id="btnAuth" type="submit">Continue</button></form>'+
+    '<div class="note-box">Already have an account? Enter your username and password to sign in. New here? Pick a username and password and your account is created automatically. Check the spelling of your username: a new name creates a new account.</div>';
   $('#authForm').addEventListener('submit',function(ev){
     ev.preventDefault();
     var u=$('#fUser').value.trim(),p=$('#fPass').value,err=$('#authErr'),btn=$('#btnAuth');
     err.textContent='';
     if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){err.textContent=AUTH_ERR.username;return}
-    if(p.length<6||p.length>72){err.textContent=mode==='up'?AUTH_ERR.password:AUTH_ERR.invalid;return}
+    if(p.length<6||p.length>72){err.textContent=AUTH_ERR.password;return}
     btn.disabled=true;btn.textContent='Please wait…';
-    api(mode==='up'?'math_signup':'math_login',{p_username:u,p_password:p}).then(function(r){
+    api('math_auth',{p_username:u,p_password:p}).then(function(r){
       if(r&&r.ok){
         setSession({token:r.token,username:r.username});renderWho();renderSetup();renderAccount();show('setup');
-        toast(mode==='up'?'Account created':'Signed in');pullAndPush();
-      }else{err.textContent=AUTH_ERR[r&&r.error]||'Something went wrong.';btn.disabled=false;btn.textContent=mode==='up'?'Create account':'Sign in'}
-    }).catch(function(e){err.textContent=e.message;btn.disabled=false;btn.textContent=mode==='up'?'Create account':'Sign in'});
+        toast(r.created?'Account created':'Signed in');pullAndPush();
+      }else{err.textContent=AUTH_ERR[r&&r.error]||'Something went wrong.';btn.disabled=false;btn.textContent='Continue'}
+    }).catch(function(e){err.textContent=e.message;btn.disabled=false;btn.textContent='Continue'});
   });
 }
 
