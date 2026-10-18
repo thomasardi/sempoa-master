@@ -125,6 +125,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .nav-in{max-width:480px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
 .nav-i{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:48px;border-radius:14px;font-size:12px;font-weight:600;color:var(--muted);transition:color .2s,background .2s}
 .nav-i.on{color:var(--accent-text);font-weight:800;background:var(--accent-soft)}
+#app.gated .nav{transform:translateY(110%);visibility:hidden;pointer-events:none}
 #app:not([data-screen="setup"]):not([data-screen="records"]):not([data-screen="ranks"]):not([data-screen="account"]) .nav{transform:translateY(110%);visibility:hidden;transition:transform .3s var(--ease),visibility 0s .3s}
 
 /* ---------- countdown ---------- */
@@ -353,6 +354,8 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .fld input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--ring)}
 .fld small{font-size:12px;color:var(--muted)}
 .ferr{min-height:20px;font-size:13px;font-weight:600;color:var(--bad)}
+#acctBody{display:flex;flex-direction:column;gap:16px}
+#acctBody .btn{align-self:flex-start}
 .me-card{display:flex;align-items:center;gap:14px}
 .me-card .av{width:54px;height:54px;border-radius:18px;background:var(--accent);color:#fff;display:grid;place-items:center;font:800 24px var(--font-ui);flex:none}
 .me-card b{font-size:19px;display:block;overflow-wrap:anywhere}
@@ -551,7 +554,7 @@ var $=function(s,r){return (r||document).querySelector(s)};
 var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
 var TOTAL=80, DURS=[60,120,180];
 var NAMES={60:'Blitz',120:'Sprint',180:'Endurance'};
-var LS_SET='sempoa.settings.v1', LS_REC='sempoa.records.v1', MAX_REC=50;
+var LS_SET='math.settings.v1', LS_REC='math.records.v1', MAX_REC=50;
 var RODS=['ones','tens','hundreds','thousands'];
 var reduced=false; try{reduced=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)}catch(e){}
 
@@ -563,7 +566,7 @@ var store={
 var settings=Object.assign({duration:120,sound:true},store.get(LS_SET,{}));
 if(DURS.indexOf(settings.duration)<0) settings.duration=120;
 function saveSettings(){store.set(LS_SET,settings)}
-var LS_SES='sempoa.session.v1', SB_URL='https://ssgyeenkyexdywuczuhz.supabase.co', SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzZ3llZW5reWV4ZHl3dWN6dWh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NzgyNjUsImV4cCI6MjA5MDM1NDI2NX0.66nxhzNJIX9aKzTYxyNE0UoJUCOOW3OPzUg3zdyZYWE';
+var LS_SES='math.session.v1', SB_URL='https://ssgyeenkyexdywuczuhz.supabase.co', SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzZ3llZW5reWV4ZHl3dWN6dWh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ3NzgyNjUsImV4cCI6MjA5MDM1NDI2NX0.66nxhzNJIX9aKzTYxyNE0UoJUCOOW3OPzUg3zdyZYWE';
 var session=store.get(LS_SES,null);
 if(!session||typeof session.token!=='string'||typeof session.username!=='string')session=null;
 function recKey(){return session?LS_REC+'.u.'+session.username.toLowerCase():LS_REC}
@@ -753,6 +756,8 @@ function digits(val,other){
 
 /* ---------- screens ---------- */
 function show(name){
+  if(!session)name='account';
+  app.classList.toggle('gated',!session);
   $$('.screen').forEach(function(s){s.hidden=s.dataset.s!==name});
   app.dataset.screen=name;
   var sc=$('.screen:not([hidden])');if(sc)sc.scrollTop=0;
@@ -1185,36 +1190,37 @@ function syncRun(rec){
   }
   say('Sending to leaderboard…');
   var who=session;
-  api('sempoa_submit_run',{p_token:who.token,p_rec:toServerRec(rec)}).then(function(r){
+  api('math_submit_run',{p_token:who.token,p_rec:toServerRec(rec)}).then(function(r){
     if(r&&r.ok){markSynced(rec.id);say(icon('check',14)+'Saved to your account'+(r.rank?' · rank #'+r.rank+' for '+(rec.dur/60)+' min':''))}
-    else if(r&&r.error==='session'){setSession(null);renderWho();say('Session expired. Sign in again to submit.')}
+    else if(r&&r.error==='session'){setSession(null);renderWho();renderAccount();show('account');toast('Session expired. Please sign in again.')}
     else say('Not added to the leaderboard: '+(AUTH_ERR[r&&r.error]||'rejected'))
   }).catch(function(e){say('Offline: will retry later. '+esc(e.message))});
 }
 function pullAndPush(){
   if(!session)return;
   var who=session;
-  api('sempoa_my_runs',{p_token:who.token,p_limit:30}).then(function(rows){
+  api('math_my_runs',{p_token:who.token,p_limit:30}).then(function(rows){
     if(!session||session.token!==who.token||!Array.isArray(rows))return;
     var all=loadRecords(),have={};all.forEach(function(r){have[r.id]=1});
     rows.forEach(function(rec){if(rec&&rec.id&&!have[rec.id]&&Array.isArray(rec.items)){rec.synced=true;all.push(rec)}});
     all.sort(function(a,b){return b.at-a.at});if(all.length>MAX_REC)all.length=MAX_REC;
     store.set(recKey(),all);
     var pend=all.filter(function(r){return r.mode==='timed'&&!r.synced&&r.v===2}).slice(0,5);
-    return pend.reduce(function(p,r){return p.then(function(){return api('sempoa_submit_run',{p_token:who.token,p_rec:toServerRec(r)}).then(function(x){if(x&&x.ok)markSynced(r.id)})})},Promise.resolve());
+    return pend.reduce(function(p,r){return p.then(function(){return api('math_submit_run',{p_token:who.token,p_rec:toServerRec(r)}).then(function(x){if(x&&x.ok)markSynced(r.id)})})},Promise.resolve());
   }).then(function(){renderSetup()}).catch(function(){});
 }
 
 function renderAccount(){
   var el=$('#acctBody'),mode=S.authMode||'in';
+  var hh=$('#s-account h1');if(hh)hh.textContent=session?'Account':(mode==='up'?'Create your account':'Welcome back');
   if(session){
     var n=loadRecords().length;
     el.innerHTML='<div class="card me-card"><div class="av">'+esc(session.username.charAt(0).toUpperCase())+'</div><div><b>'+esc(session.username)+'</b><small>'+n+' run'+(n===1?'':'s')+' on this device · synced to your account</small></div></div>'+
       '<div class="note-box">Your timed runs are added to the leaderboard automatically while you are signed in. Practice retries are never submitted.</div>'+
       '<button class="btn outline" id="btnLogout">Sign out</button>';
     $('#btnLogout').addEventListener('click',function(){
-      var t=session&&session.token;setSession(null);renderWho();renderSetup();renderAccount();toast('Signed out');
-      if(t)api('sempoa_logout',{p_token:t}).catch(function(){});
+      var t=session&&session.token;setSession(null);renderWho();renderSetup();renderAccount();show('account');toast('Signed out');
+      if(t)api('math_logout',{p_token:t}).catch(function(){});
     });
     return;
   }
@@ -1224,7 +1230,7 @@ function renderAccount(){
     '<div class="fld"><label for="fPass">Password</label><input id="fPass" name="password" type="password" autocomplete="'+(mode==='up'?'new-password':'current-password')+'" maxlength="72"'+(mode==='up'?'><small>At least 6 characters. There is no password reset, so keep it somewhere safe.</small>':'>')+'</div>'+
     '<p class="ferr" id="authErr" role="alert"></p>'+
     '<button class="btn primary" id="btnAuth" type="submit">'+(mode==='up'?'Create account':'Sign in')+'</button></form>'+
-    '<div class="note-box">You can play without an account. An account adds your runs to the leaderboard and keeps your records across devices.</div>';
+    '<div class="note-box">An account is required to play. Your runs and records are saved to it and ranked on the leaderboard, on any device.</div>';
   $$('#acctBody .tab').forEach(function(t){t.addEventListener('click',function(){S.authMode=t.dataset.m;renderAccount()})});
   $('#authForm').addEventListener('submit',function(ev){
     ev.preventDefault();
@@ -1233,9 +1239,9 @@ function renderAccount(){
     if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){err.textContent=AUTH_ERR.username;return}
     if(p.length<6||p.length>72){err.textContent=mode==='up'?AUTH_ERR.password:AUTH_ERR.invalid;return}
     btn.disabled=true;btn.textContent='Please wait…';
-    api(mode==='up'?'sempoa_signup':'sempoa_login',{p_username:u,p_password:p}).then(function(r){
+    api(mode==='up'?'math_signup':'math_login',{p_username:u,p_password:p}).then(function(r){
       if(r&&r.ok){
-        setSession({token:r.token,username:r.username});renderWho();renderSetup();renderAccount();
+        setSession({token:r.token,username:r.username});renderWho();renderSetup();renderAccount();show('setup');
         toast(mode==='up'?'Account created':'Signed in');pullAndPush();
       }else{err.textContent=AUTH_ERR[r&&r.error]||'Something went wrong.';btn.disabled=false;btn.textContent=mode==='up'?'Create account':'Sign in'}
     }).catch(function(e){err.textContent=e.message;btn.disabled=false;btn.textContent=mode==='up'?'Create account':'Sign in'});
@@ -1248,7 +1254,7 @@ function renderRanks(){
   $$('#rankChips .chip').forEach(function(c){c.addEventListener('click',function(){S.rankDur=+c.dataset.d;renderRanks()})});
   var body=$('#rankBody'),stamp=++S.rankReq;
   body.innerHTML='<div class="empty"><p>Loading…</p></div>';
-  api('sempoa_leaderboard',{p_duration:d,p_token:session?session.token:null}).then(function(r){
+  api('math_leaderboard',{p_duration:d,p_token:session?session.token:null}).then(function(r){
     if(stamp!==S.rankReq)return;
     var rows=(r&&r.top)||[],me=r&&r.me;
     function row(x){
@@ -1265,7 +1271,8 @@ function renderRanks(){
 
 /* ---------- init ---------- */
 renderSetup();
-show('setup');
+renderAccount();
+show(session?'setup':'account');
 pullAndPush();
 })();
 </script>
