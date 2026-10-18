@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#ea580c">
+<meta name="theme-color" content="#1877f2">
 <meta name="description" content="Math Master: 80 mental-math problems in 1, 2 or 3 minutes, from single digits to three digits.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='2' y='3' width='36' height='34' rx='9' fill='%23ea580c'/%3E%3Cg stroke='%23fff' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M10 15h12M16 9v12'/%3E%3Cpath d='M18 30h14'/%3E%3Cpath d='M26 14h6'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='2' y='3' width='36' height='34' rx='9' fill='%231877f2'/%3E%3Cg stroke='%23fff' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M10 15h12M16 9v12'/%3E%3Cpath d='M18 30h14'/%3E%3Cpath d='M26 14h6'/%3E%3C/g%3E%3C/svg%3E">
 <title>Math Master</title>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0}img{max-width:100%}</style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap">
@@ -13,14 +13,14 @@
 /* Layout: one app shell. Each screen is its own scroller; the drill screen is a fixed-height stack
    (HUD, question paper, answer slot) with a keypad sheet that slides up from the bottom on tap. */
 :root{
-  --bg:#fff8f4; --surface:#ffffff; --surface-2:#fff2ea; --line:#f2dccf; --line-strong:#e3bfae;
-  --fg:#261813; --muted:#6f564c;
-  --accent:#ea580c; --accent-text:#c2410c; --accent-soft:#ffe6d7; --cta-a:#d1470a; --cta-b:#f26a1b; --ring:rgba(234,88,12,.18);
+  --bg:#f0f2f5; --surface:#ffffff; --surface-2:#f0f2f5; --line:#e4e6eb; --line-strong:#ced0d4;
+  --fg:#050505; --muted:#65676b;
+  --accent:#1877f2; --accent-text:#1465d8; --accent-soft:#e7f3ff; --cta-a:#1565d8; --cta-b:#2d88ff; --ring:rgba(24,119,242,.22);
   --good:#047857; --good-fill:#10b981; --good-soft:#d6f4e6;
   --bad:#c81e1e; --bad-fill:#ef4444; --bad-soft:#fde2df;
   --warn:#a15207; --warn-fill:#fbbf24; --warn-soft:#fdefc4;
-  --shadow:0 1px 2px rgba(90,40,15,.06),0 8px 22px rgba(90,40,15,.07);
-  --scrim:rgba(38,24,19,.5);
+  --shadow:0 1px 2px rgba(0,0,0,.08),0 6px 18px rgba(0,0,0,.05);
+  --scrim:rgba(5,5,5,.5);
   --font-ui:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
   --font-num:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --ease:cubic-bezier(.22,.9,.3,1);
@@ -44,7 +44,7 @@ h1,h2,h3,p{margin:0}
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
   padding-block:12px 100px;animation:screenIn .36s var(--ease) both}
 .gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.wrap{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:14px;min-width:0}
+.wrap{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:16px;min-width:0}
 
 /* ---------- shared bits ---------- */
 .eyebrow{font-size:11px;line-height:14px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent-text)}
@@ -178,23 +178,23 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .slot.ok{animation:okPulse .2s}
 
 .keypad{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);border-radius:22px 22px 0 0;
-  box-shadow:0 -10px 30px rgba(60,20,5,.12);padding:12px max(14px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+  box-shadow:0 -10px 30px rgba(0,0,0,.12);padding:12px max(14px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
   visibility:hidden;transform:translateY(var(--kpshift,0px));transition:transform .34s var(--ease),visibility 0s;will-change:transform;-webkit-user-select:none;user-select:none}
 #app[data-screen="drill"]~.keypad{visibility:visible}
 .keypad.open{transform:none}
 .kp-in{max-width:480px;margin:0 auto}
 .kp-ans{display:flex;gap:10px;align-items:stretch}
 .kp-ans .slot{flex:1;min-width:0;min-height:56px;font-size:30px;padding:0 16px}
-.kp-send{flex:none;width:76px;border-radius:16px;display:grid;place-items:center;color:#fff;background:linear-gradient(100deg,var(--cta-a),var(--cta-b));box-shadow:0 2px 0 rgba(120,40,0,.45)}
+.kp-send{flex:none;width:76px;border-radius:16px;display:grid;place-items:center;color:#fff;background:linear-gradient(100deg,var(--cta-a),var(--cta-b));box-shadow:0 2px 0 rgba(10,50,120,.4)}
 .kp-send:active{transform:translateY(2px);box-shadow:none}
 .kp-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,auto);gap:10px;margin-top:10px;transition:opacity .2s}
 .keypad:not(.open) .kp-grid{opacity:0;pointer-events:none}
-.k.tall{grid-column:4;grid-row:1 / span 2;height:auto}
+.k.sym{color:var(--muted)}
 .k{height:clamp(42px,6.2vh,58px);height:clamp(42px,6.2dvh,58px);border-radius:15px;background:var(--surface-2);border:1px solid var(--line);font:700 26px/1 var(--font-num);display:grid;place-items:center;
   box-shadow:0 2px 0 var(--line-strong);transition:transform .08s,box-shadow .08s,background .12s;color:var(--fg)}
 .k:active,.k.pressed{transform:translateY(2px);box-shadow:0 0 0 var(--line-strong);background:var(--accent-soft)}
 .k.del{color:var(--bad)}
-.k.enter{color:#fff;background:linear-gradient(100deg,var(--cta-a),var(--cta-b));border-color:transparent;box-shadow:0 2px 0 rgba(120,40,0,.45)}
+.k.enter{color:#fff;background:linear-gradient(100deg,var(--cta-a),var(--cta-b));border-color:transparent;box-shadow:0 2px 0 rgba(10,50,120,.4)}
 .k.enter:active,.k.enter.pressed{background:linear-gradient(100deg,var(--cta-a),var(--cta-b));box-shadow:0 0 0 transparent}
 
 .sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center;background:var(--scrim);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:fade .22s both}
@@ -207,6 +207,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
 /* ---------- results ---------- */
+.stagger{display:flex;flex-direction:column;gap:16px}
 .stagger > *{animation:screenIn .5s var(--ease) both;animation-delay:calc(var(--i,0) * 55ms)}
 .r-head{display:flex;align-items:center;gap:6px;min-height:48px}
 .r-head .t{display:flex;flex-direction:column;min-width:0}
@@ -414,11 +415,10 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
         <div class="field-head"><h2>Session length</h2><span class="mono">80 PROBLEMS</span></div>
         <div class="seg-wrap" role="radiogroup" aria-label="Session length">
           <i class="seg-thumb" id="segThumb"></i>
-          <button class="seg" role="radio" data-d="60"><span class="seg-n">1</span><span class="seg-u">min</span><span class="seg-name">Blitz</span><span class="seg-pace mono">0.75s / q</span></button>
-          <button class="seg" role="radio" data-d="120"><span class="seg-n">2</span><span class="seg-u">min</span><span class="seg-name">Sprint</span><span class="seg-pace mono">1.50s / q</span></button>
-          <button class="seg" role="radio" data-d="180"><span class="seg-n">3</span><span class="seg-u">min</span><span class="seg-name">Endurance</span><span class="seg-pace mono">2.25s / q</span></button>
+          <button class="seg" role="radio" data-d="60"><span class="seg-n">1</span><span class="seg-u">min</span><span class="seg-name">Blitz</span></button>
+          <button class="seg" role="radio" data-d="120"><span class="seg-n">2</span><span class="seg-u">min</span><span class="seg-name">Sprint</span></button>
+          <button class="seg" role="radio" data-d="180"><span class="seg-n">3</span><span class="seg-u">min</span><span class="seg-name">Endurance</span></button>
         </div>
-        <p class="note" id="paceNote"></p>
       </div>
 
       <div class="card pb" id="pbCard"></div>
@@ -502,7 +502,6 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
   <div class="cta-bar" id="ctaBar">
     <div class="cta-in">
       <button class="btn primary cta" id="btnStart"><span id="startLabel">Start 80-question drill</span><span data-ic="arrow"></span></button>
-      <p class="cta-sub">Target pace <b class="mono" id="targetPace">1.50s</b> per problem</p>
     </div>
   </div>
 
@@ -524,12 +523,11 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
       <button class="kp-send" id="kSend" aria-label="Submit answer"><span data-ic="send" data-size="26"></span></button>
     </div>
     <div class="kp-grid" id="kpGrid">
-      <button class="k" data-k="1">1</button><button class="k" data-k="2">2</button><button class="k" data-k="3">3</button>
-      <button class="k enter tall" id="kEnter" aria-label="Next question"><span data-ic="check" data-size="30"></span></button>
-      <button class="k" data-k="4">4</button><button class="k" data-k="5">5</button><button class="k" data-k="6">6</button>
+      <button class="k" data-k="1">1</button><button class="k" data-k="2">2</button><button class="k" data-k="3">3</button><button class="k sym" data-x="$">$</button>
+      <button class="k" data-k="4">4</button><button class="k" data-k="5">5</button><button class="k" data-k="6">6</button><button class="k sym" data-x="-">-</button>
       <button class="k" data-k="7">7</button><button class="k" data-k="8">8</button><button class="k" data-k="9">9</button>
       <button class="k del" id="kDel" aria-label="Backspace"><span data-ic="backspace" data-size="26"></span></button>
-      <button class="k" data-k="00">00</button><button class="k" data-k="0">0</button><button class="k" id="kClr" aria-label="Clear">C</button>
+      <button class="k sym" data-x=",">,</button><button class="k" data-k="0">0</button><button class="k sym" data-x=".">.</button>
       <button class="k" id="kpHide" aria-label="Hide keypad"><span data-ic="chev" data-size="26"></span></button>
     </div>
   </div>
@@ -779,8 +777,6 @@ function renderSetup(){
   var d=settings.duration,idx=DURS.indexOf(d),pace=d/TOTAL*1000;
   $('#segThumb').style.transform='translateX('+(idx*100)+'%)';
   $$('.seg').forEach(function(b){var on=+b.dataset.d===d;b.classList.toggle('on',on);b.setAttribute('aria-checked',on?'true':'false')});
-  $('#targetPace').textContent=fmtS(pace);
-  $('#paceNote').textContent=d===60?'0.75 s per problem leaves almost no time to type an answer. Treat Blitz as a stretch target.':d===120?'1.50 s per problem, typing included. A solid pace to train toward.':'2.25 s per problem. Good for building accuracy before speed.';
   setSwitch('#swSound',settings.sound);
   renderWho();
   $('#btnSound').innerHTML=icon(settings.sound?'volume':'volumeoff',22);
@@ -916,9 +912,8 @@ function submit(){
 }
 $$('#kpGrid [data-k]').forEach(function(b){press(b,function(){pressKey(b.dataset.k)})});
 press($('#kDel'),backspace);
-press($('#kEnter'),function(){submit()});
 press($('#kSend'),function(){submit()});
-press($('#kClr'),function(){var r=S.run;if(!r||r.paused||r.done)return;r.input='';showInput()});
+$$('#kpGrid [data-x]').forEach(function(b){press(b,function(){buzz(4)})}); /* symbol keys: answers are whole numbers, so these only click */
 press($('#kpHide'),function(){setKeypad(false)});
 press($('#slot'),function(){var r=S.run;if(r&&!r.paused&&!r.done&&!r.kpOpen)setKeypad(true)});
 document.addEventListener('keydown',function(e){
