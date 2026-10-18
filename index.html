@@ -425,7 +425,7 @@ h1{font-size:28px;line-height:1.12;font-weight:800;letter-spacing:-.02em;text-wr
 
       <div class="card module">
         <span class="m-ic" data-ic="calc"></span>
-        <div><b>Addition &amp; subtraction</b><small>2–5 numbers, from single digits up to three digits. The running total never drops below 1.</small></div>
+        <div><b>Addition &amp; subtraction</b><small>2–5 numbers, from single digits up to three digits. The running total never drops below 1, and subtractions never need borrowing.</small></div>
         <span class="m-ok" data-ic="check"></span>
       </div>
 
@@ -650,7 +650,7 @@ function buzz(ms){if(settings.sound&&navigator.vibrate){try{navigator.vibrate(ms
 /* ---------- problem generator ----------
    The 80 questions follow a fixed table (STAGES). Each stage fixes the number of rows and how many digits each
    row has. Rules for every problem: the first row is added, the running total never drops below 1, at least one
-   row is subtracted, and no two neighbouring rows are the same number. Largest possible answer: 5 rows of 3 digits. */
+   row is subtracted without borrowing (each digit taken away fits under the matching digit of the running total), and no two neighbouring rows are the same number. Two single-digit rows at the top: the first is bigger. Largest possible answer: 5 rows of 3 digits. */
 var MAX_TOTAL=9999;
 var LEVELS={
   0:{name:'Simple',desc:'3 numbers · 1 digit'},1:{name:'Medium',desc:'3 numbers · 2 digits'},
@@ -683,21 +683,34 @@ function shapeOf(st){
   if(a.indexOf(mx)<0)a[rnd(0,rows-1)]=mx;
   return a;
 }
+/* direct subtraction: every digit of the number taken away is <= the matching digit of the running total, so no borrowing */
+function direct(total,v){while(v>0){if(v%10>total%10)return false;v=Math.floor(v/10);total=Math.floor(total/10)}return true}
 function makeProblem(st){
-  for(var tries=0;tries<1500;tries++){
+  for(var tries=0;tries<3000;tries++){
     var shape=shapeOf(st),ops=[],total=0,minus=false,ok=true;
     for(var i=0;i<shape.length&&ok;i++){
-      var lo=shape[i]===1?(i===0?2:1):Math.pow(10,shape[i]-1),hi=Math.pow(10,shape[i])-1,v,neg=false;
-      if(i===0)v=rnd(lo,hi);
-      else if(Math.random()<.45&&total-1>=lo){v=rnd(lo,Math.min(hi,total-1));neg=true}
-      else v=rnd(lo,hi);
-      if(v===Math.abs(ops[i-1]))ok=false;
+      var lo=shape[i]===1?(i===0?2:1):Math.pow(10,shape[i]-1),hi=Math.pow(10,shape[i])-1,v=null,neg=false;
+      /* two single-digit rows at the top: the first number is bigger than the second (6 + 5, 9 - 4) */
+      if(i===1&&shape[0]===1&&shape[1]===1)hi=Math.min(hi,ops[0]-1);
+      if(i===0){v=rnd(lo,hi)}
+      else{
+        var sub=[],add=[];
+        for(var c=lo;c<=hi;c++){
+          if(c===Math.abs(ops[i-1]))continue;
+          if(c<=total-1&&direct(total,c))sub.push(c);
+          add.push(c);
+        }
+        if(Math.random()<.45&&sub.length){v=sub[rnd(0,sub.length-1)];neg=true}
+        else if(add.length)v=add[rnd(0,add.length-1)];
+        else if(sub.length){v=sub[rnd(0,sub.length-1)];neg=true}
+        else{ok=false;break}
+      }
       ops.push(neg?-v:v);total+=neg?-v:v;if(neg)minus=true;
     }
     if(ok&&minus&&total>=1&&total<=MAX_TOTAL)return ops;
   }
   var sh=shapeOf(st),o=[],t=0;
-  sh.forEach(function(d,i){var v=i===0?Math.pow(10,d)-1:Math.pow(10,d-1);if(i>0&&t>v){o.push(-v);t-=v}else{o.push(v);t+=v}});
+  sh.forEach(function(d,i){var v=i===0?Math.pow(10,d)-1:Math.pow(10,d-1);if(i>0&&t>v&&direct(t,v)){o.push(-v);t-=v}else{o.push(v);t+=v}});
   return o;
 }
 function genProblems(n){
