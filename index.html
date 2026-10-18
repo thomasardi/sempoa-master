@@ -38,6 +38,9 @@ h1,h2,h3,p{margin:0}
 .ic{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;display:block}
 ::-webkit-scrollbar{display:none}
 .screen{scrollbar-width:none}
+.ptr{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));left:50%;z-index:80;width:42px;height:42px;margin-left:-21px;border-radius:50%;background:var(--surface);color:var(--accent);box-shadow:0 2px 10px rgba(0,0,0,.18);display:grid;place-items:center;opacity:0;transform:translateY(-70px);pointer-events:none}
+.ptr.spin .ic{animation:ptrSpin .8s linear infinite}
+@keyframes ptrSpin{to{transform:rotate(360deg)}}
 
 #app{position:relative;height:100%;overflow:hidden}
 .screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
@@ -1275,10 +1278,45 @@ function renderRanks(){
   }).catch(function(e){if(stamp!==S.rankReq)return;body.innerHTML='<div class="empty"><span class="e-ic">'+icon('trophy',28)+'</span><b>Leaderboard unavailable</b><p>'+esc(e.message)+'</p><button class="btn primary" id="rankRetry" style="margin-top:6px">Try again</button></div>';$('#rankRetry').addEventListener('click',renderRanks)});
 }
 
+/* ---------- pull down to refresh (every page except the drill itself) ---------- */
+(function(){
+  var ptr=document.createElement('div');ptr.className='ptr';ptr.setAttribute('aria-hidden','true');ptr.innerHTML=icon('replay',22);document.body.appendChild(ptr);
+  var TH=72,y0=null,dy=0,sc=null,busy=false,ic=ptr.firstChild;
+  function allowed(){var n=app.dataset.screen;return n!=='drill'&&n!=='count'&&$('#sheet').hidden}
+  function paint(d,anim){ptr.style.transition=anim?'transform .25s var(--ease),opacity .2s':'none';ptr.style.transform='translateY('+(d-70)+'px)';ptr.style.opacity=Math.min(1,d/TH);if(ic)ic.style.transform=busy?'':'rotate('+(d*4)+'deg)'}
+  function reset(){busy=false;ptr.classList.remove('spin');paint(0,true)}
+  function refresh(){
+    busy=true;ptr.classList.add('spin');paint(TH*.8,true);
+    var n=app.dataset.screen;
+    if(n==='results'){pullAndPush();setTimeout(reset,900);return}
+    try{sessionStorage.setItem('math.page',n)}catch(e){}
+    setTimeout(function(){location.reload()},350);
+  }
+  document.addEventListener('touchstart',function(e){
+    if(busy||!allowed()||e.touches.length!==1)return;
+    var el=e.target.closest&&e.target.closest('.screen');
+    if(!el||el.scrollTop>0){y0=null;return}
+    sc=el;y0=e.touches[0].clientY;dy=0;
+  },{passive:true});
+  document.addEventListener('touchmove',function(e){
+    if(y0==null||busy)return;
+    var d=e.touches[0].clientY-y0;
+    if(d<=0||sc.scrollTop>0){dy=0;paint(0,false);return}
+    dy=Math.min(d*.5,110);
+    if(e.cancelable)e.preventDefault();
+    paint(dy,false);
+  },{passive:false});
+  function end(){if(y0==null)return;var go=dy>=TH;y0=null;if(go&&!busy)refresh();else if(!busy){dy=0;paint(0,true)}}
+  document.addEventListener('touchend',end,{passive:true});
+  document.addEventListener('touchcancel',end,{passive:true});
+})();
+
 /* ---------- init ---------- */
 renderSetup();
 renderAccount();
-show(session?'setup':'account');
+var back=null;try{back=sessionStorage.getItem('math.page');sessionStorage.removeItem('math.page')}catch(e){}
+if(session&&(back==='records'||back==='ranks')){if(back==='records')renderRecords();else renderRanks();show(back)}
+else show(session?(back==='account'?'account':'setup'):'account');
 pullAndPush();
 })();
 </script>
